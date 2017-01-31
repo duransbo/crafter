@@ -1,0 +1,46 @@
+<?php	/* Abrir PHP para instanciar variaveis e mixins */
+
+	$var = '10px';	/* Instancia de variavel */
+
+
+
+	$opct = function($r,$g,$b) {						/* Instancia de function */
+		return "rgba(".$r.",".$g.",".$b.",.5)";	/* Return de string */
+	};
+
+
+
+	$mixin = new Mixin('			/* Instancia de mixin */
+		width: $1;					/* Utilizando parametros */
+		height: $1;
+		background-color: $2;
+		text-align: center;
+	', array(2 => 'black'));	/* Array passando os parametros default */
+
+
+
+	$extend = new Extend($this, '	/* Instancia de Extend */
+		margin: 0;
+		padding: 0;
+	');
+
+?>		/* Fechar PHP para escrever o CSS */
+
+*, p, #id {}			/* Devem ser evitados */
+.object {}				/* Nome relacionado ao objeto de interface, em minusculo */
+.object-feature {}	/* Padrão imposto pelo css, ex: text-align */
+.-extend {}				/* Classe com propriedades e valores reutilizaveis, ex: -button */
+._state {}				/* Estado de um elemento, ex: _open */
+
+	/* Três linhas de espaço entre um conjunto e outro */
+
+<?= $extend('.demo') ?> {						/* Utilizando extend */
+	border: 0px;									/* Indentação de um tab */
+	padding: 0px;									/* Espaço entre a propriedade e o valor */
+	margin: <?= $var ?>;							/* Utilizando variavel */
+	<?= $mixin(array('100px','gold')) ?>	/* Utilizando mixin */
+	<?= $opct(255,0,0) ?>						/* Utilizando função */
+}
+<?= $extend('.demo-extend') ?> {
+	<?= $mixin(array('50px')) ?>
+}

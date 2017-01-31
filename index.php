@@ -7,7 +7,7 @@
 		<title>Grid with crafter</title>
 		<?php
 			$crafter->addCss('assets/css/reset');
-			$crafter->addCss('assets/css/style');
+			$crafter->addCss('assets/css/demo');
 			$crafter->css();
 		?>
 	</head>

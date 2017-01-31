@@ -47,7 +47,7 @@
 				foreach ($this->styles['n'][$category] as $key => $value) {
 					$uri .= '&'.$key.'='.$this->styles['n'][$category][$key];
 				}
-				echo "\t\t".'<link rel="stylesheet" href="'.CONTROLLER.'css.php?'.$uri.'">'."\n";
+				echo "\t\t".'<link rel="stylesheet" href="'.CONTROLLER.'crafter-css.php?'.$uri.'">'."\n";
 			}
 		}
 
