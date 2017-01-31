@@ -10,7 +10,7 @@
 
 
 
-	$mixin = new Mixin('			/* Instancia de mixin */
+	$mixin = $this->mixin('		/* Instancia de mixin */
 		width: $1;					/* Utilizando parametros */
 		height: $1;
 		background-color: $2;
@@ -19,7 +19,7 @@
 
 
 
-	$extend = new Extend($this, '	/* Instancia de Extend */
+	$extend = $this->extend('	/* Instancia de Extend */
 		margin: 0;
 		padding: 0;
 	');

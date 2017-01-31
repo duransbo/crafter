@@ -11,7 +11,7 @@
 		private $return;
 		private $default;
 
-		function __construct($return, $default = array()) {
+		function __construct($return, $default) {
 			$this->return = $return;
 			$this->default = $default;
 		}
@@ -33,17 +33,25 @@
 
 	class Extend {
 
-		public $return;
-		public $elements = array();
+		private $return;
+		private $elements = array();
 
-		function __construct($crafter, $return) {
+		function __construct($return) {
 			$this->return = $return;
-			array_push($crafter->extends, $this);
+			return $this;
 		}
 
 		function __invoke($element) {
 			array_push($this->elements, $element);
 			return $element;
+		}
+
+		public function getElements() {
+			return $this->elements;
+		}
+
+		public function getReturn() {
+			return $this->return;
 		}
 
 	}
@@ -52,9 +60,9 @@
 
 	class CssCrafter {
 
-		public $extends = array();
+		private $extends = array();
 
-		public function __construct($files) {
+		function __construct($files) {
 			foreach ($files as $file) {
 				if (file_exists(ROOT.$file)) {
 					require(ROOT.$file);
@@ -65,12 +73,22 @@
 			}
 		}
 
+		public function mixin($return, $default = array()) {
+			return new Mixin($return, $default);
+		}
+
+		public function extend($return) {
+			$extend = new Extend($return);
+			array_push($this->extends, $extend);
+			return $extend;
+		}
+
 		public function writeExtends() {
 			foreach ($this->extends as $extend) {
-				foreach ($extend->elements as $key => $value){
+				foreach ($extend->getElements() as $key => $value){
 					echo ($key == 0) ? $value : ', ' . $value;
 				}
-				echo ' { ' . $extend->return . ' }' . "\n\n";
+				echo ' { ' . $extend->getReturn() . ' }' . "\n\n";
 			}
 		}
 

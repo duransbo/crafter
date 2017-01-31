@@ -5,11 +5,11 @@
 		return "rgba(".$r.",".$g.",".$b.",.5)";
 	};
 
-	$mixin = new Mixin('
+	$mixin = $this->mixin('
 		width: calc(((100% * $1) / $2) - ' . ($margin * 2) . 'px);
 	');
 
-	$extend = new Extend($this, '
+	$extend = $this->extend('
 		height: 25px;
 		margin: ' . $margin . 'px;
 		background-color: '.$opct(0,0,0).';
