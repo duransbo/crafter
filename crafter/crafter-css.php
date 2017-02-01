@@ -11,12 +11,12 @@
 		private $return;
 		private $default;
 
-		function __construct($return, $default) {
+		public function __construct($return, $default = array()) {
 			$this->return = $return;
 			$this->default = $default;
 		}
 
-		function __invoke($var) {
+		public function __invoke($var) {
 			$return = $this->return;
 			foreach ($var as $key => $value) {
 				$return = str_replace('$' . ($key + 1), $value, $return);
@@ -35,23 +35,25 @@
 
 		private $return;
 		private $elements = array();
+		private static $extends = array();
 
-		function __construct($return) {
+		public function __construct($return) {
 			$this->return = $return;
-			return $this;
+			array_push(self::$extends, $this);
 		}
 
-		function __invoke($element) {
+		public function __invoke($element) {
 			array_push($this->elements, $element);
 			return $element;
 		}
 
-		public function getElements() {
-			return $this->elements;
-		}
-
-		public function getReturn() {
-			return $this->return;
+		public static function writeExtends() {
+			foreach (self::$extends as $extend) {
+				foreach ($extend->elements as $key => $value){
+					echo ($key == 0) ? $value : ', ' . $value;
+				}
+				echo ' { ' . $extend->return . ' }' . "\n\n";
+			}
 		}
 
 	}
@@ -60,42 +62,32 @@
 
 	class CssCrafter {
 
-		private $extends = array();
+		private static $instance = 0;
 
-		function __construct($files) {
-			foreach ($files as $file) {
-				if (file_exists(ROOT.$file)) {
-					require(ROOT.$file);
-				} else {
-					echo '//404';
+		private function __construct() { }
+		private function __clone() { }
+		private function __wakeup() { }
+
+		public function render($files) {
+			if (self::$instance === 0) {
+            self::$instance = 1;
+            foreach ($files as $file) {
+					if (file_exists(ROOT.$file)) {
+						require(ROOT.$file);
+					} else {
+						echo '//404';
+					}
+					echo "\n\n\n\n";
 				}
-				echo "\n\n\n\n";
-			}
-		}
-
-		public function mixin($return, $default = array()) {
-			return new Mixin($return, $default);
-		}
-
-		public function extend($return) {
-			$extend = new Extend($return);
-			array_push($this->extends, $extend);
-			return $extend;
-		}
-
-		public function writeExtends() {
-			foreach ($this->extends as $extend) {
-				foreach ($extend->getElements() as $key => $value){
-					echo ($key == 0) ? $value : ', ' . $value;
-				}
-				echo ' { ' . $extend->getReturn() . ' }' . "\n\n";
+				Extend::writeExtends();
+			} else {
+				echo "VAI TOMA NO CU";
 			}
 		}
 
 	}
 
 
-	$crafter = new CssCrafter($_GET);
-	$crafter->writeExtends();
+	CssCrafter::render($_GET);
 
 ?>
