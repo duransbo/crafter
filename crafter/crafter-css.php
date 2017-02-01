@@ -75,13 +75,12 @@
 					if (file_exists(ROOT.$file)) {
 						require(ROOT.$file);
 					} else {
-						echo '//404';
+						echo '//404 '.ROOT.$file;
 					}
 					echo "\n\n\n\n";
 				}
-				Extend::writeExtends();
 			} else {
-				echo "VAI TOMA NO CU";
+				die('O crafter já foi renderizado 1 vez');
 			}
 		}
 
@@ -89,5 +88,6 @@
 
 
 	CssCrafter::render($_GET);
+	Extend::writeExtends();
 
 ?>

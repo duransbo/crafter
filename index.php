@@ -4,7 +4,7 @@
 	<html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
-		<title>Grid with crafter</title>
+		<title>Grid with Crafter-CSS</title>
 		<?php
 			$crafter->addCss('assets/css/reset');
 			$crafter->addCss('assets/css/demo');

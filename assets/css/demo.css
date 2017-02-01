@@ -1,4 +1,5 @@
 <?php
+
 	$margin = 10;
 
 	$opct = function($r,$g,$b) {
@@ -14,6 +15,7 @@
 		margin: ' . $margin . 'px;
 		background-color: '.$opct(0,0,0).';
 	');
+
 ?>
 
 
